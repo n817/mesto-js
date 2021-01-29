@@ -14,7 +14,7 @@
   <main id="content">
     <section class="profile page__section" aria-label="Профиль">
       <div class="profile__content">
-        <img src="./images/avatar.png" alt="" class="profile__avatar">
+        <img src="./images/avatar.png" alt="Фото профиля" class="profile__avatar">
         <div class="profile__info">
           <h1 class="profile__name">Жак-Ив Кусто</h1>
           <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
@@ -75,13 +75,15 @@
   </footer>
 
   <section class="popup">
-    <div class="popup__container">
-      <button type="button" class="popup__close" aria-label="Закрыть попап"></button>
+    <form class="popup__container">
+      <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input" placeholder="Имя" required>
-      <input type="text" class="popup__input" placeholder="О себе" required>
-      <button type="submit" class="popup__save">Сохранить</button>
-    </div>
+      <input type="text" class="popup__input" id="name" placeholder="Имя" required>
+      <input type="text" class="popup__input" id="description" placeholder="О себе" required>
+      <button type="submit" class="popup__submit-button">Сохранить</button>
+    </form>
   </section>
+
+  <script src="./script.js"></script>
 </body>
 </html>

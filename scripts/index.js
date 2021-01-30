@@ -1,15 +1,15 @@
 // Задаем переменные блока profile
-let profile = document.querySelector('.profile');
-let editButton = profile.querySelector('.profile__edit-button');
-let profileName = profile.querySelector('.profile__name');
-let profileDescription = profile.querySelector('.profile__description');
+const profile = document.querySelector('.profile');
+const editButton = profile.querySelector('.profile__edit-button');
+const profileName = profile.querySelector('.profile__name');
+const profileDescription = profile.querySelector('.profile__description');
 
 // Задаем переменные блока popup
-let popup = document.querySelector('.popup');
-let popupForm = popup.querySelector('.popup__container');
-let closeButton = popupForm.querySelector('.popup__close-button');
-let nameInput = popupForm.querySelector('#name');
-let descriptionInput = popupForm.querySelector('#description');
+const popup = document.querySelector('.popup');
+const popupForm = popup.querySelector('.popup__container');
+const closeButton = popupForm.querySelector('.popup__close-button');
+const nameInput = popupForm.querySelector('#name');
+const descriptionInput = popupForm.querySelector('#description');
 
 // Функция переключения видимости popup
 function togglePopup(){

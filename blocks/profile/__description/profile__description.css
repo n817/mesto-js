@@ -2,17 +2,17 @@
   max-width: 350px;
   font-size: 18px;
   line-height: 22px;
+  color: #fff;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  padding-top: 16px;
   margin: 0;
 }
 
 @media screen and (max-width: 649px) {
   /* стили для экранов с разрешением менее 650px по ширине */
   .profile__description {
-    max-width: 250px;
+    max-width: 220px;
     font-size: 14px;
     line-height: 17px;
     padding-top: 14px;

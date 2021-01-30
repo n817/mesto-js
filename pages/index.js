@@ -11,23 +11,26 @@ let closeButton = popupForm.querySelector('.popup__close-button');
 let nameInput = popupForm.querySelector('#name');
 let descriptionInput = popupForm.querySelector('#description');
 
-// Заполняем поля ввода значениями, которые сейчас отображаются на странице
-nameInput.value = profileName.textContent;
-descriptionInput.value = profileDescription.textContent;
+// Функция переключения видимости popup
+function togglePopup(){
+  popup.classList.toggle('popup_opened');
+}
 
-// Реализуем открытие и закрытие popup
-editButton.addEventListener('click', function(){
-  popup.classList.add('popup_opened');
-});
-closeButton.addEventListener('click', function(){
-  popup.classList.remove('popup_opened');
-});
+// Функция открытия popup
+function openPopup(){
+  nameInput.value = profileName.textContent; // Заполняем поля ввода значениями, которые сейчас отображаются на странице
+  descriptionInput.value = profileDescription.textContent;
+  togglePopup();
+}
 
-// Реализуем сохранение профиля и закрытие popup
+// Функция сохранения введенной информации профиля
 function formSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileDescription.textContent = descriptionInput.value;
-    popup.classList.remove('popup_opened');
+    togglePopup();
 }
+
+editButton.addEventListener('click', openPopup);
+closeButton.addEventListener('click', togglePopup);
 popupForm.addEventListener('submit', formSubmitHandler);

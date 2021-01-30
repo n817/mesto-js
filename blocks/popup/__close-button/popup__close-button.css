@@ -25,8 +25,8 @@
 @media screen and (max-width: 649px) {
   /* стили для экранов с разрешением менее 650px по ширине */
   .popup__close-button {
-    top: -26px;
-    right: -26px;
+    top: -40px;
+    right: 5px;
     width: 26px;
     height: 26px;
     background-size: 26px 2px,2px 26px;

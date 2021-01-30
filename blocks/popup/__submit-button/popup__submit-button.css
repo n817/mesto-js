@@ -8,6 +8,7 @@
   color: #fff;
   outline-style: none;
   border: none;
+  padding: 0;
 }
 
 .popup__submit-button:hover {

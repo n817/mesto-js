@@ -1,12 +1,14 @@
 .header {
-  min-height: 74px;
   border-bottom: solid 1px #545454;
   padding-top: 45px;
+  padding-bottom: 41px;
 }
 
 @media screen and (max-width: 649px) {
   /* стили для экранов с разрешением менее 650px по ширине */
   .header {
     padding-top: 28px;
+    padding-bottom: 32px;
+    max-width: 100%;
   }
 }

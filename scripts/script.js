@@ -59,6 +59,9 @@ function createCard(item){
   const cardRemoveButton = newCard.querySelector('.card__trash-button'); //возможность удаления карточек
   cardRemoveButton.addEventListener('click', deleteCard);
 
+  const cardLikeButton = newCard.querySelector('.card__like-button'); //возможность ставить и убирать лайки
+  cardLikeButton.addEventListener('click', likeCard);
+
   return newCard;
 }
 
@@ -88,6 +91,14 @@ function deleteCard(evt){
   const targetElement = evt.target;
   const targetCard = targetElement.closest('.card');
   targetCard.remove();
+}
+
+/* Реализуем возможность ставить и убирать лайки */
+
+function likeCard(evt){
+  evt.preventDefault();
+  const targetElement = evt.target;
+  targetElement.classList.toggle('card__like-button_active');
 }
 
 // Открытие новой карточки

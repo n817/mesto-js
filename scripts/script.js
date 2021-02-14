@@ -1,4 +1,4 @@
-// --- Общие функции ---
+/* --- Общие функции --- */
 
 // Функция переключения видимости popup
 function togglePopup(popupName){
@@ -6,11 +6,112 @@ function togglePopup(popupName){
 }
 
 
-// --- Реализуем возможность редактирования профиля ---
+
+
+
+/* --- Работа с карточками --- */
+
+// Массив с начальными карточками
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+/* Создаем рендер для добавления карточек из массива */
+const cardAddButton = document.querySelector('.profile__add-button');
+const cardsContainer = document.querySelector('.cards'); // ссылка на контейнер, в котором будут карточки
+const cardTemplate = cardsContainer.querySelector('#card-template'); //ссылка на template карточек
+
+function cardsRender(){
+  const cardHTML = initialCards.map(createCard); // обрабатываем элементы массива с помощью функции createCard
+  cardsContainer.append(...cardHTML);
+}
+
+function createCard(item){
+  const newCard = cardTemplate.content.cloneNode(true);
+  const newCardTitle = newCard.querySelector('.card__title');
+  const newCardImage = newCard.querySelector('.card__image');
+  newCardTitle.textContent = item.name;
+  newCardImage.src = item.link;
+
+  const cardRemoveButton = newCard.querySelector('.card__trash-button'); //возможность удаления карточек
+  cardRemoveButton.addEventListener('click', deleteCard);
+
+  return newCard;
+}
+
+cardsRender(); // отрисовываем начальные карточки
+
+/* Реализуем возможность добавления карточек пользователем */
+
+// Задаем переменные popup-блока card-add
+const cardAddPopup = document.querySelector('#card-add');
+const cardAddForm = cardAddPopup.querySelector('.popup__container');
+const cardCloseButton = cardAddForm.querySelector('.popup__close-button');
+const cardSubmitButton = cardAddForm.querySelector('.popup__submit-button');
+
+function addUserCard(evt){
+  evt.preventDefault();
+  const cardTitleInput = cardAddForm.querySelector('#card-title-input').value;
+  const photoUrlInput = cardAddForm.querySelector('#photo-url-input').value;
+  const userCard = createCard({name: cardTitleInput, link: photoUrlInput});
+  cardsContainer.prepend(userCard);
+  togglePopup(cardAddPopup);
+}
+
+/* Реализуем возможность удаления карточек пользователем */
+
+function deleteCard(evt){
+  evt.preventDefault();
+  const targetElement = evt.target;
+  const targetCard = targetElement.closest('.card');
+  targetCard.remove();
+}
+
+// Открытие новой карточки
+cardAddButton.addEventListener('click', function(){
+  togglePopup(cardAddPopup);
+});
+
+// Сохранение новой карточки
+cardAddForm.addEventListener('submit', addUserCard);
+
+// Закрытие новой карточки
+cardCloseButton.addEventListener('click', function(){
+  togglePopup(cardAddPopup);
+});
+
+
+
+
+
+
+/* --- Редактирование профиля --- */
 
 // Задаем переменные блока profile
 const profile = document.querySelector('.profile');
-const placeAddButton = profile.querySelector('.profile__add-button');
 const profileEditButton = profile.querySelector('.profile__edit-button');
 const profileName = profile.querySelector('.profile__name');
 const profileDescription = profile.querySelector('.profile__description');
@@ -30,19 +131,6 @@ function formSubmitHandler (evt) {
     togglePopup(profileEditPopup);
 }
 
-
-// --- Реализуем возможность добавления новых мест ---
-
-// Задаем переменные popup-блока place-add
-const placeAddPopup = document.querySelector('#place-add');
-const placeAddForm = placeAddPopup.querySelector('.popup__container');
-const placeCloseButton = placeAddForm.querySelector('.popup__close-button');
-const placeTitleInput = placeAddForm.querySelector('#place-title-input');
-const photoUrlInput = placeAddForm.querySelector('#photo-url-input');
-
-
-// --- Добавляем слушатели событий ---
-
 // Открытие popup при клике на кнопку редактирования профиля
 // с заполнением полей ввода значениями, которые сейчас отображаются на странице
 profileEditButton.addEventListener('click', function(){
@@ -59,12 +147,4 @@ profileCloseButton.addEventListener('click', function(){
   togglePopup(profileEditPopup);
 });
 
-// Открытие popup добавления новых мест
-placeAddButton.addEventListener('click', function(){
-  togglePopup(placeAddPopup);
-});
 
-// Закрытие popup добавления новых мест
-placeCloseButton.addEventListener('click', function(){
-  togglePopup(placeAddPopup);
-});

@@ -31,6 +31,7 @@
           <p class="element__title">Карачаевск</p>
           <button type="button" class="element__like-button" aria-label="Нравится"></button>
         </figcaption>
+        <button type="button" class="element__trash-button" aria-label="Удалить"></button>
       </figure>
       <figure class="element">
         <img src="./images/elbrus.png" alt="Гора Эльбрус" class="element__image">
@@ -38,6 +39,7 @@
           <p class="element__title">Гора Эльбрус</p>
           <button type="button" class="element__like-button" aria-label="Нравится"></button>
         </figcaption>
+        <button type="button" class="element__trash-button" aria-label="Удалить"></button>
       </figure>
       <figure class="element">
         <img src="./images/dombay.png" alt="Домбай" class="element__image">
@@ -45,6 +47,7 @@
           <p class="element__title">Домбай</p>
           <button type="button" class="element__like-button" aria-label="Нравится"></button>
         </figcaption>
+        <button type="button" class="element__trash-button" aria-label="Удалить"></button>
       </figure>
       <figure class="element">
         <img src="./images/elbrus.png" alt="Гора Эльбрус" class="element__image">
@@ -52,6 +55,7 @@
           <p class="element__title">Гора Эльбрус</p>
           <button type="button" class="element__like-button" aria-label="Нравится"></button>
         </figcaption>
+        <button type="button" class="element__trash-button" aria-label="Удалить"></button>
       </figure>
       <figure class="element">
         <img src="./images/dombay.png" alt="Домбай" class="element__image">
@@ -59,6 +63,7 @@
           <p class="element__title">Домбай</p>
           <button type="button" class="element__like-button" aria-label="Нравится"></button>
         </figcaption>
+        <button type="button" class="element__trash-button" aria-label="Удалить"></button>
       </figure>
       <figure class="element">
         <img src="./images/karachaevsk.jpg" alt="Карачаево-Черкессия" class="element__image">
@@ -66,6 +71,7 @@
           <p class="element__title">Карачаево-Черкессия</p>
           <button type="button" class="element__like-button" aria-label="Нравится"></button>
         </figcaption>
+        <button type="button" class="element__trash-button" aria-label="Удалить"></button>
       </figure>
     </section>
   </main>
@@ -74,16 +80,26 @@
     <p class="footer__content">&copy; 2020 Mesto Russia</p>
   </footer>
 
-  <section class="popup">
-    <form class="popup__container" name="popup-form">
+  <section id="profile-edit" class="popup" aria-label="Редактирование профиля">
+    <form class="popup__container" id="profile-edit-form">
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input" id="name" name="name-input" placeholder="Имя" required>
-      <input type="text" class="popup__input" id="description" name="description-input" placeholder="О себе" required>
+      <input type="text" class="popup__input" id="name-input" placeholder="Имя" required>
+      <input type="text" class="popup__input" id="description-input" placeholder="О себе" required>
       <button type="submit" class="popup__submit-button">Сохранить</button>
     </form>
   </section>
 
-  <script src="./scripts/index.js"></script>
+  <section id="place-add" class="popup" aria-label="Добавление нового места">
+    <form class="popup__container" id="place-add-form">
+      <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
+      <h2 class="popup__title">Новое место</h2>
+      <input type="text" class="popup__input" id="place-title-input" placeholder="Название" required>
+      <input type="text" class="popup__input" id="photo-url-input" placeholder="Ссылка на картинку" required>
+      <button type="submit" class="popup__submit-button">Создать</button>
+    </form>
+  </section>
+
+  <script src="./scripts/script.js"></script>
 </body>
 </html>

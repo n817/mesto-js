@@ -1,4 +1,4 @@
-.element__trash-button {
+.card__trash-button {
   position: absolute;
   top: 18px;
   right: 15px;
@@ -10,7 +10,7 @@
   outline-style: none;
 }
 
-.element__trash-button:hover {
+.card__trash-button:hover {
   cursor: pointer;
   transition: opacity 0.2s;
   opacity: 0.6;

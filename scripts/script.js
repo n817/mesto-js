@@ -39,16 +39,18 @@ const initialCards = [
   }
 ];
 
-/* Создаем рендер для добавления карточек из массива */
-const cardAddButton = document.querySelector('.profile__add-button');
+// Задаем переменные popup-блока card-add
+const cardAddButton = document.querySelector('.profile__add-button'); // кнопка добавления новой карточки
 const cardsContainer = document.querySelector('.cards'); // ссылка на контейнер, в котором будут карточки
 const cardTemplate = cardsContainer.querySelector('#card-template'); //ссылка на template карточек
 
+// Создаем рендер для добавления карточек
 function cardsRender(){
   const cardHTML = initialCards.map(createCard); // обрабатываем элементы массива с помощью функции createCard
   cardsContainer.append(...cardHTML);
 }
 
+// Функция создания карточек из template
 function createCard(item){
   const newCard = cardTemplate.content.cloneNode(true);
   const newCardTitle = newCard.querySelector('.card__title');
@@ -69,7 +71,7 @@ function createCard(item){
   return newCard;
 }
 
-cardsRender(); // отрисовываем начальные карточки
+cardsRender(); // отрисовываем карточки
 
 /* Реализуем возможность добавления карточек пользователем */
 

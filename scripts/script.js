@@ -54,6 +54,7 @@ function createCard(item){
   const newCardTitle = newCard.querySelector('.card__title');
   const newCardImage = newCard.querySelector('.card__image');
   newCardTitle.textContent = item.name;
+  newCardImage.alt = item.name;
   newCardImage.src = item.link;
 
   const cardRemoveButton = newCard.querySelector('.card__trash-button'); //возможность удаления карточек
@@ -61,6 +62,9 @@ function createCard(item){
 
   const cardLikeButton = newCard.querySelector('.card__like-button'); //возможность ставить и убирать лайки
   cardLikeButton.addEventListener('click', likeCard);
+
+  const cardImageButton = newCard.querySelector('.card__image-button'); //возможность открывать увеличенное фото
+  cardImageButton.addEventListener('click', zoomOpen);
 
   return newCard;
 }
@@ -83,6 +87,7 @@ function addUserCard(evt){
   cardsContainer.prepend(userCard);
   togglePopup(cardAddPopup);
 }
+
 
 /* Реализуем возможность удаления карточек пользователем */
 
@@ -119,6 +124,34 @@ cardCloseButton.addEventListener('click', function(){
 
 
 
+/* Реализуем возможность открытия popup zoom с картинкой */
+
+// Задаем переменные popup-блока zoom
+const zoomPopup = document.querySelector('.zoom');
+const zoomImage = zoomPopup.querySelector('.zoom__image');
+const zoomCaption = zoomPopup.querySelector('.zoom__caption');
+const zoomCloseButton = zoomPopup.querySelector('.popup__close-button');
+
+// Функция открытия popup-блока zoom
+function zoomOpen(evt){
+  evt.preventDefault();
+  const targetElement = evt.target;
+  console.log(targetElement);
+  zoomImage.src = targetElement.src;
+  zoomCaption.textContent = targetElement.alt;
+  togglePopup(zoomPopup);
+}
+
+// Закрытие popup-блока zoom
+zoomCloseButton.addEventListener('click', function(){
+  togglePopup(zoomPopup);
+})
+
+
+
+
+
+
 /* --- Редактирование профиля --- */
 
 // Задаем переменные блока profile
@@ -142,7 +175,7 @@ function formSubmitHandler (evt) {
     togglePopup(profileEditPopup);
 }
 
-// Открытие popup при клике на кнопку редактирования профиля
+// Функция открытия popup при клике на кнопку редактирования профиля
 // с заполнением полей ввода значениями, которые сейчас отображаются на странице
 profileEditButton.addEventListener('click', function(){
   nameInput.value = profileName.textContent;

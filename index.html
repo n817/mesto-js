@@ -28,7 +28,9 @@
     <section class="cards page__section" aria-label="Места">
       <template id="card-template">
         <figure class="card">
-          <img alt="Фотография места" class="card__image">
+          <button class="card__image-button">
+            <img alt="Фотография места" class="card__image">
+          </button>
           <figcaption class="card__caption">
             <p class="card__title"></p>
             <button type="button" class="card__like-button" aria-label="Нравится"></button>
@@ -61,6 +63,14 @@
       <input type="text" class="popup__input" id="photo-url-input" placeholder="Ссылка на картинку" required>
       <button type="submit" class="popup__submit-button">Создать</button>
     </form>
+  </section>
+
+  <section class="popup zoom" aria-label="Просмотр фотографий">
+    <figure class="zoom__container">
+      <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
+      <img src="#" alt="Фотография места" class="zoom__image">
+      <figcaption class="zoom__caption">Каньон Святой Анны</figcaption>
+    </figure>
   </section>
 </body>
 </html>

@@ -1,53 +1,27 @@
 /* --- Общие функции --- */
 
-// Функция переключения видимости popup
-function togglePopup(popupName){
-  popupName.classList.toggle('popup_opened');
+// Функция открытия popup
+function openPopup(popupName){
+  popupName.classList.add('popup_opened');
 }
 
-
-
+// Функция закрытия popup
+function closePopup(popupName){
+  popupName.classList.remove('popup_opened');
+}
 
 
 /* --- Работа с карточками --- */
 
-// Массив с начальными карточками
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
-
 // Задаем переменные popup-блока card-add
 const cardAddButton = document.querySelector('.profile__add-button'); // кнопка добавления новой карточки
 const cardsContainer = document.querySelector('.cards'); // ссылка на контейнер, в котором будут карточки
-const cardTemplate = cardsContainer.querySelector('#card-template'); //ссылка на template карточек
+const cardTemplate = cardsContainer.querySelector('.card-template'); //ссылка на template карточек
 
 // Создаем рендер для добавления карточек
-function cardsRender(){
-  const cardHTML = initialCards.map(createCard); // обрабатываем элементы массива с помощью функции createCard
-  cardsContainer.append(...cardHTML);
+function cardsRender(array, container){
+  const cardsElements = array.map(createCard); // обрабатываем элементы массива с помощью функции createCard
+  container.append(...cardsElements);
 }
 
 // Функция создания карточек из template
@@ -71,30 +45,32 @@ function createCard(item){
   return newCard;
 }
 
-cardsRender(); // отрисовываем карточки
+cardsRender(initialCards, cardsContainer); // отрисовываем карточки и добавляем в контейнер на страницу
 
 /* Реализуем возможность добавления карточек пользователем */
 
 // Задаем переменные popup-блока card-add
-const cardAddPopup = document.querySelector('#card-add');
+const cardAddPopup = document.querySelector('.popup_type_card-add');
 const cardAddForm = cardAddPopup.querySelector('.popup__container');
 const cardCloseButton = cardAddForm.querySelector('.popup__close-button');
 const cardSubmitButton = cardAddForm.querySelector('.popup__submit-button');
+const cardTitleInput = cardAddForm.querySelector('#card-title-input');
+const photoUrlInput = cardAddForm.querySelector('#photo-url-input');
 
 function addUserCard(evt){
   evt.preventDefault();
-  const cardTitleInput = cardAddForm.querySelector('#card-title-input').value;
-  const photoUrlInput = cardAddForm.querySelector('#photo-url-input').value;
-  const userCard = createCard({name: cardTitleInput, link: photoUrlInput});
+  const titleValue = cardTitleInput.value;
+  const urlValue = photoUrlInput.value;
+  const userCard = createCard({name: titleValue, link: urlValue});
   cardsContainer.prepend(userCard);
-  togglePopup(cardAddPopup);
+  cardAddForm.reset(); //очищаем форму
+  closePopup(cardAddPopup);
 }
 
 
 /* Реализуем возможность удаления карточек пользователем */
 
 function deleteCard(evt){
-  evt.preventDefault();
   const targetElement = evt.target;
   const targetCard = targetElement.closest('.card');
   targetCard.remove();
@@ -103,24 +79,18 @@ function deleteCard(evt){
 /* Реализуем возможность ставить и убирать лайки */
 
 function likeCard(evt){
-  evt.preventDefault();
   const targetElement = evt.target;
   targetElement.classList.toggle('card__like-button_active');
 }
 
 // Открытие новой карточки
-cardAddButton.addEventListener('click', function(){
-  togglePopup(cardAddPopup);
-});
+cardAddButton.addEventListener('click', () => openPopup(cardAddPopup));
 
 // Сохранение новой карточки
 cardAddForm.addEventListener('submit', addUserCard);
 
 // Закрытие новой карточки
-cardCloseButton.addEventListener('click', function(){
-  togglePopup(cardAddPopup);
-});
-
+cardCloseButton.addEventListener('click', () => closePopup(cardAddPopup));
 
 
 
@@ -136,19 +106,14 @@ const zoomCloseButton = zoomPopup.querySelector('.popup__close-button');
 
 // Функция открытия popup-блока zoom
 function zoomOpen(evt){
-  evt.preventDefault();
   const targetElement = evt.target;
-  console.log(targetElement);
   zoomImage.src = targetElement.src;
   zoomCaption.textContent = targetElement.alt;
-  togglePopup(zoomPopup);
+  openPopup(zoomPopup);
 }
 
 // Закрытие popup-блока zoom
-zoomCloseButton.addEventListener('click', function(){
-  togglePopup(zoomPopup);
-})
-
+zoomCloseButton.addEventListener('click', () => closePopup(zoomPopup));
 
 
 
@@ -163,7 +128,7 @@ const profileName = profile.querySelector('.profile__name');
 const profileDescription = profile.querySelector('.profile__description');
 
 // Задаем переменные popup-блока profile-edit
-const profileEditPopup = document.querySelector('#profile-edit');
+const profileEditPopup = document.querySelector('.popup_type_profile-edit');
 const profileEditForm = profileEditPopup.querySelector('.popup__container');
 const profileCloseButton = profileEditForm.querySelector('.popup__close-button');
 const nameInput = profileEditForm.querySelector('#name-input');
@@ -174,7 +139,7 @@ function formSubmitHandler (evt) {
     evt.preventDefault();
     profileName.textContent = nameInput.value;
     profileDescription.textContent = descriptionInput.value;
-    togglePopup(profileEditPopup);
+    closePopup(profileEditPopup);
 }
 
 // Функция открытия popup при клике на кнопку редактирования профиля
@@ -182,15 +147,11 @@ function formSubmitHandler (evt) {
 profileEditButton.addEventListener('click', function(){
   nameInput.value = profileName.textContent;
   descriptionInput.value = profileDescription.textContent;
-  togglePopup(profileEditPopup);
+  openPopup(profileEditPopup);
 });
 
 // Сохранение введенной информации профиля при клике на кнопку "Сохранить"
 profileEditForm.addEventListener('submit', formSubmitHandler);
 
 // Закрытие popup редактирования профиля
-profileCloseButton.addEventListener('click', function(){
-  togglePopup(profileEditPopup);
-});
-
-
+profileCloseButton.addEventListener('click', () => closePopup(profileEditPopup));

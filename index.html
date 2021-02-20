@@ -6,7 +6,7 @@
   <title>Mesto</title>
   <link rel="stylesheet" href="./pages/index.css">
   <script src="./scripts/initial-сards.js" defer></script>
-  <script src="./scripts/script.js" defer></script>
+  <script src="./scripts/main.js" defer></script>
 </head>
 <body class="page">
   <header class="header page__section">
@@ -47,21 +47,21 @@
   </footer>
 
   <section class="popup popup_type_profile-edit" aria-label="Редактирование профиля">
-    <form class="popup__container" id="profile-edit-form">
+    <form class="popup__container" name="edit" novalidate>
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input" id="name-input" placeholder="Имя" required>
-      <input type="text" class="popup__input" id="description-input" placeholder="О себе" required>
+      <input type="text" class="popup__input" name="username" placeholder="Имя" required>
+      <input type="text" class="popup__input" name="description" placeholder="О себе" required>
       <button type="submit" class="popup__submit-button">Сохранить</button>
     </form>
   </section>
 
   <section class="popup popup_type_card-add" aria-label="Добавление нового места">
-    <form class="popup__container" id="card-add-form">
+    <form class="popup__container" name="add" novalidate>
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="popup__title">Новое место</h2>
-      <input type="text" class="popup__input" id="card-title-input" placeholder="Название" required>
-      <input type="text" class="popup__input" id="photo-url-input" placeholder="Ссылка на картинку" required>
+      <input type="text" class="popup__input" name="title" placeholder="Название" required>
+      <input type="url" class="popup__input" name="url" placeholder="Ссылка на картинку" required>
       <button type="submit" class="popup__submit-button">Создать</button>
     </form>
   </section>

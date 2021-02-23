@@ -1,4 +1,4 @@
-.popup__container {
+.form {
   position: relative;
   width: 360px;
   background-color: #fff;
@@ -9,7 +9,7 @@
 
 @media screen and (max-width: 649px) {
   /* стили для экранов с разрешением менее 650px по ширине */
-  .popup__container {
+  .form {
     width: 238px;
     padding: 25px 22px;
   }

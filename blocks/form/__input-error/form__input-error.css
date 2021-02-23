@@ -1,0 +1,11 @@
+.form__input-error {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: -15px;
+  font-size: 12px;
+  line-height: 15px;
+  color: red;
+  padding-left: 2px;
+  margin: 0;
+}

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="./pages/index.css">
   <script src="./scripts/initial-сards.js" defer></script>
   <script src="./scripts/main.js" defer></script>
+  <script src="./scripts/validation.js" defer></script>
 </head>
 <body class="page">
   <header class="header page__section">
@@ -47,27 +48,39 @@
   </footer>
 
   <section class="popup popup_type_profile-edit" aria-label="Редактирование профиля">
-    <form class="popup__container" name="edit" novalidate>
+    <form class="form" name="edit" novalidate>
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
-      <h2 class="popup__title">Редактировать профиль</h2>
-      <input type="text" class="popup__input" name="username" placeholder="Имя" required>
-      <input type="text" class="popup__input" name="description" placeholder="О себе" required>
-      <button type="submit" class="popup__submit-button">Сохранить</button>
+      <h2 class="form__title">Редактировать профиль</h2>
+      <label class="form__field">
+        <input type="text" id="username-input" class="form__input" name="username" placeholder="Имя" minlength="2" maxlength="40" required>
+        <span class="form__input-error username-input-error"></span>
+      </label>
+      <label class="form__field">
+        <input type="text" id="description-input" class="form__input" name="description" placeholder="О себе" minlength="2" maxlength="200" required>
+        <span class="form__input-error description-input-error"></span>
+      </label>
+      <button type="submit" class="form__submit-button">Сохранить</button>
     </form>
   </section>
 
   <section class="popup popup_type_card-add" aria-label="Добавление нового места">
-    <form class="popup__container" name="add" novalidate>
+    <form class="form" name="add" novalidate>
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
-      <h2 class="popup__title">Новое место</h2>
-      <input type="text" class="popup__input" name="title" placeholder="Название" required>
-      <input type="url" class="popup__input" name="url" placeholder="Ссылка на картинку" required>
-      <button type="submit" class="popup__submit-button">Создать</button>
+      <h2 class="form__title">Новое место</h2>
+      <label class="form__field">
+        <input type="text" id="title-input" class="form__input" name="title" placeholder="Название" minlength="1" maxlength="30" required>
+        <span class="form__input-error title-input-error"></span>
+      </label>
+      <label class="form__field">
+        <input type="url" id="url-input" class="form__input form__input-url" name="url" placeholder="Ссылка на картинку" required>
+        <span class="form__input-error url-input-error"></span>
+      </label>
+      <button type="submit" class="form__submit-button">Создать</button>
     </form>
   </section>
 
-  <section class="popup zoom" aria-label="Просмотр фотографий">
-    <figure class="zoom__container">
+  <section class="popup popup_type_zoom" aria-label="Просмотр фотографий">
+    <figure class="zoom">
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <img src="#" alt="Фотография места" class="zoom__image">
       <figcaption class="zoom__caption">Каньон Святой Анны</figcaption>

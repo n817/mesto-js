@@ -1,11 +1,11 @@
 /* --- Переменные ---*/
 
+const popups = document.querySelectorAll('.popup'); // все popup-блоки
 const cardAddButton = document.querySelector('.profile__add-button'); // ссылка на кнопку добавления новой карточки
 const cardsContainer = document.querySelector('.cards'); // ссылка на grid-контейнер, в котором размещаются карточки
 const cardTemplate = cardsContainer.querySelector('.card-template'); //ссылка на template карточки
 // Переменные popup-блока добавления карточки
 const cardAddPopup = document.querySelector('.popup_type_card-add');
-const cardCloseButton = cardAddPopup.querySelector('.popup__close-button');
 // Переменные popup-блока zoom
 const zoomPopup = document.querySelector('.popup_type_zoom');
 const zoomImage = zoomPopup.querySelector('.zoom__image');
@@ -34,11 +34,13 @@ const urlInput = cardAddForm.elements.url;
 // Функция показа popup
 function showPopup(el){
   el.classList.add('popup_opened');
+  document.addEventListener('keydown', closeByEscape); // добавляем слушатель кнопки Esc
 }
 
 // Функция скрытия popup
 function hidePopup(el){
   el.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closeByEscape); // добавляем слушатель кнопки Esc
 }
 
 // Функция сохранения введенной информации профиля
@@ -85,6 +87,14 @@ function zoomOpen(evt){
   showPopup(zoomPopup);
 }
 
+// Функция закрытия popup кнопкой Esc
+function closeByEscape(evt) {
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.popup_opened')
+    hidePopup(openedPopup);
+  }
+}
+
 
 
 /* События и действия */
@@ -102,49 +112,23 @@ profileEditButton.addEventListener('click', function(){
 // Сохранение введенной информации профиля при клике на кнопку "Сохранить"
 profileEditForm.addEventListener('submit', formSubmitHandler);
 
-// Закрытие popup редактирования профиля кликом по кнопке "Закрыть"
-profileCloseButton.addEventListener('click', () => hidePopup(profileEditPopup));
-
-// Закрытие popup редактирования профиля кликом на оверлей
-profileEditPopup.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup')){
-    hidePopup(profileEditPopup)
-  }
-});
-
 // Открытие новой карточки
 cardAddButton.addEventListener('click', () => showPopup(cardAddPopup));
 
 // Сохранение новой карточки
 cardAddForm.addEventListener('submit', addUserCard);
 
-// Закрытие новой карточки кликом по кнопке "Закрыть"
-cardCloseButton.addEventListener('click', () => hidePopup(cardAddPopup));
 
-// Закрытие новой карточки кликом на оверлей
-cardAddPopup.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup')){
-    hidePopup(cardAddPopup)
-  }
-});
-
-// Закрытие popup-блока zoom кликом по кнопке "Закрыть"
-zoomCloseButton.addEventListener('click', () => hidePopup(zoomPopup));
-
-// Закрытие popup-блока zoom кликом на оверлей
-zoomPopup.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('popup')){
-    hidePopup(zoomPopup)
-  }
-});
-
-// Закрытие всех popup кнопкой "Esc"
-document.addEventListener('keydown', function(evt){
-  if (evt.key === 'Escape') {
-    hidePopup(profileEditPopup);
-    hidePopup(cardAddPopup);
-    hidePopup(zoomPopup);
-  }
+// Закрытие всех popup кликом на оверлей или крестик
+popups.forEach((popup) => {
+  popup.addEventListener('click', (evt) => {
+      if (evt.target.classList.contains('popup_opened')) {
+        hidePopup(popup)
+      }
+      if (evt.target.classList.contains('popup__close-button')) {
+        hidePopup(popup)
+      }
+  })
 })
 
 // Интерактив карточки: лайк, удаление и зум картинки

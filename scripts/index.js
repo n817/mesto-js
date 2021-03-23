@@ -1,16 +1,14 @@
+import initialCards from './initialCards.js';
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+
 /* --- Переменные ---*/
 
 const popups = document.querySelectorAll('.popup'); // все popup-блоки
 const cardAddButton = document.querySelector('.profile__add-button'); // ссылка на кнопку добавления новой карточки
 const cardsContainer = document.querySelector('.cards'); // ссылка на grid-контейнер, в котором размещаются карточки
-const cardTemplate = cardsContainer.querySelector('.card-template'); //ссылка на template карточки
 // Переменные popup-блока добавления карточки
 const cardAddPopup = document.querySelector('.popup_type_card-add');
-// Переменные popup-блока zoom
-const zoomPopup = document.querySelector('.popup_type_zoom');
-const zoomImage = zoomPopup.querySelector('.zoom__image');
-const zoomCaption = zoomPopup.querySelector('.zoom__caption');
-const zoomCloseButton = zoomPopup.querySelector('.popup__close-button');
 // Переменные блока profile
 const profile = document.querySelector('.profile');
 const profileEditButton = profile.querySelector('.profile__edit-button');
@@ -18,7 +16,6 @@ const profileName = profile.querySelector('.profile__name');
 const profileDescription = profile.querySelector('.profile__description');
 // Переменные popup-блока редактирования информации о пользователе
 const profileEditPopup = document.querySelector('.popup_type_profile-edit');
-const profileCloseButton = profileEditPopup.querySelector('.popup__close-button');
 // Добавляем формы
 const profileEditForm = document.forms.edit; // форма редактирования профиля
 const nameInput = profileEditForm.elements.username;
@@ -27,6 +24,15 @@ const cardAddForm = document.forms.add; // форма добавления ка�
 const titleInput = cardAddForm.elements.title;
 const urlInput = cardAddForm.elements.url;
 
+// Исходные данные (значения селекторов) для валидатора форм
+const validatorData = {
+  formSelector: '.form',
+  inputSelector: '.form__input',
+  submitButtonSelector: '.form__submit-button',
+  inactiveButtonClass: 'form__submit-button_inactive',
+  inputErrorClass: 'form__input_type_error',
+  errorClass: 'form__input-error_active'
+}
 
 
 /* --- Функции --- */
@@ -40,7 +46,7 @@ function showPopup(el){
 // Функция скрытия popup
 function hidePopup(el){
   el.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closeByEscape); // добавляем слушатель кнопки Esc
+  document.removeEventListener('keydown', closeByEscape); // убираем слушатель кнопки Esc
 }
 
 // Функция сохранения введенной информации профиля
@@ -51,40 +57,16 @@ function formSubmitHandler (evt) {
     hidePopup(profileEditPopup);
 }
 
-// Функция создания карточки из template
-function createCard(el){
-  const newCard = cardTemplate.content.cloneNode(true); // клонируем template карточки в переменную newCard
-  const newCardImage = newCard.querySelector('.card__image');
-  const newCardTitle = newCard.querySelector('.card__title');
-  newCardImage.src = el.link;
-  newCardImage.alt = el.name;
-  newCardTitle.textContent = el.name;
-  return newCard;
-}
-
-// Функция автоматического добавления карточек из массива
-function cardsRender(array, container){
-  const card = array.map(createCard);
-  container.append(...card);
-}
-
 // Функция добавления новой карточки пользователем
 function addUserCard(evt){
   evt.preventDefault();
   const titleValue = titleInput.value;
   const urlValue = urlInput.value;
-  const userCard = createCard({name: titleValue, link: urlValue});
-  cardsContainer.prepend(userCard);
+  const userCard = new Card({image: urlValue, title: titleValue}, '.card-template');
+  const userCardElement = userCard.generateCard();
+  cardsContainer.prepend(userCardElement);
   cardAddForm.reset(); //очищаем форму
   hidePopup(cardAddPopup);
-}
-
-// Функция открытия popup-блока zoom (увеличенной картинки)
-function zoomOpen(evt){
-  const targetElement = evt.target;
-  zoomImage.src = targetElement.src;
-  zoomCaption.textContent = targetElement.alt;
-  showPopup(zoomPopup);
 }
 
 // Функция закрытия popup кнопкой Esc
@@ -99,8 +81,14 @@ function closeByEscape(evt) {
 
 /* События и действия */
 
-// Отрисовываем исходные карточки из массива
-cardsRender(initialCards, cardsContainer);
+
+// Добавляем исходные карточки из массива в DOM
+initialCards.forEach((item) => {
+  const card = new Card(item, '.card-template');
+  const cardElement = card.generateCard(); // Создаём карточку и возвращаем наружу
+  cardsContainer.append(cardElement); // Добавляем в DOM
+});
+
 
 // Открытие popup редактирования профиля с заполнением полей ввода текущими значениями
 profileEditButton.addEventListener('click', function(){
@@ -131,15 +119,8 @@ popups.forEach((popup) => {
   })
 })
 
-// Интерактив карточки: лайк, удаление и зум картинки
-cardsContainer.addEventListener('click', function(evt){
-  if (evt.target.classList.contains('card__like-button')){
-    evt.target.classList.toggle('card__like-button_active');
-  }
-  if (evt.target.classList.contains('card__trash-button')){
-    evt.target.closest('.card').remove();
-  }
-  if (evt.target.classList.contains('card__image')){
-    zoomOpen(evt);
-  }
-});
+// Включаем валидацию форм
+const profileEditFormValidate = new FormValidator(profileEditForm, validatorData);
+profileEditFormValidate.enableValidation();
+const cardAddFormValidate = new FormValidator(cardAddForm, validatorData);
+cardAddFormValidate.enableValidation();

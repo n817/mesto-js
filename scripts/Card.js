@@ -1,8 +1,9 @@
 export default class Card {
-  constructor(data, cardSelector){ // Принимаем на вход данные карточки (картинка, подпись) и селектор template карточки
+  constructor(data, cardSelector, cardZoom){
     this._image = data.image;
     this._title = data.title;
     this._cardSelector = cardSelector;
+    this._cardZoom = cardZoom; // Функция открытия popup при клике на картинку
   }
 
   // Функция создания карточки из template
@@ -34,7 +35,7 @@ export default class Card {
       this._cardRemove();
     })
     this._element.querySelector('.card__image-button').addEventListener('click', () => {
-      this._cardZoom();
+      this._cardZoom(this._image, this._title);
     })
   };
 
@@ -47,22 +48,5 @@ export default class Card {
   _cardRemove() {
     this._element.remove();
   }
-
-  // Функция открытия popup увеличенной картинки
-  _cardZoom() {
-    document.querySelector('.zoom__image').src = this._image;
-    document.querySelector('.zoom__caption').textContent = this._title;
-    document.querySelector('.popup_type_zoom').classList.add('popup_opened');
-    document.addEventListener('keydown', this._closeByEscape); // добавляем слушатель кнопки Esc
-  }
-
-  // Функция закрытия popup увеличенной картинки кнопкой Esc
-  _closeByEscape(evt) {
-    if (evt.key === 'Escape') {
-    document.querySelector('.popup_type_zoom').classList.remove('popup_opened');
-    document.removeEventListener('keydown', this._closeByEscape); // убираем слушатель кнопки Esc
-    }
-  }
-
 }
 

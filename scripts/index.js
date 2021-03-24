@@ -16,6 +16,10 @@ const profileName = profile.querySelector('.profile__name');
 const profileDescription = profile.querySelector('.profile__description');
 // Переменные popup-блока редактирования информации о пользователе
 const profileEditPopup = document.querySelector('.popup_type_profile-edit');
+// Переменные popup-блока zoom
+const zoomPopup = document.querySelector('.popup_type_zoom');
+const zoomImage = zoomPopup.querySelector('.zoom__image');
+const zoomCaption = zoomPopup.querySelector('.zoom__caption');
 // Добавляем формы
 const profileEditForm = document.forms.edit; // форма редактирования профиля
 const nameInput = profileEditForm.elements.username;
@@ -49,6 +53,13 @@ function hidePopup(el){
   document.removeEventListener('keydown', closeByEscape); // убираем слушатель кнопки Esc
 }
 
+// Функция открытия popup при клике на картинку
+function cardZoom(image, title) {
+  zoomImage.src = image;
+  zoomCaption.textContent = title;
+  showPopup(zoomPopup);
+}
+
 // Функция сохранения введенной информации профиля
 function formSubmitHandler (evt) {
     evt.preventDefault();
@@ -57,14 +68,17 @@ function formSubmitHandler (evt) {
     hidePopup(profileEditPopup);
 }
 
+// Функция создания новой карточки
+function createCard(data, cardSelector){
+  const newCard = new Card(data, cardSelector, cardZoom);
+  const newCardElement = newCard.generateCard();
+  return newCardElement;
+}
+
 // Функция добавления новой карточки пользователем
 function addUserCard(evt){
   evt.preventDefault();
-  const titleValue = titleInput.value;
-  const urlValue = urlInput.value;
-  const userCard = new Card({image: urlValue, title: titleValue}, '.card-template');
-  const userCardElement = userCard.generateCard();
-  cardsContainer.prepend(userCardElement);
+  cardsContainer.prepend(createCard({image: urlInput.value, title: titleInput.value}, '.card-template'));
   cardAddForm.reset(); //очищаем форму
   hidePopup(cardAddPopup);
 }
@@ -84,9 +98,7 @@ function closeByEscape(evt) {
 
 // Добавляем исходные карточки из массива в DOM
 initialCards.forEach((item) => {
-  const card = new Card(item, '.card-template');
-  const cardElement = card.generateCard(); // Создаём карточку и возвращаем наружу
-  cardsContainer.append(cardElement); // Добавляем в DOM
+  cardsContainer.append(createCard(item, '.card-template'));
 });
 
 

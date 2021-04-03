@@ -1,9 +1,10 @@
+// Класс создания карточки
 export default class Card {
-  constructor(data, cardSelector, cardZoom){
+  constructor(data, cardSelector, handleCardClick){
     this._image = data.image;
     this._title = data.title;
     this._cardSelector = cardSelector;
-    this._cardZoom = cardZoom; // Функция открытия popup при клике на картинку
+    this.handleCardClick = handleCardClick; // Функция открытия popup при клике на картинку
   }
 
   // Функция создания карточки из template
@@ -35,7 +36,7 @@ export default class Card {
       this._cardRemove();
     })
     this._element.querySelector('.card__image-button').addEventListener('click', () => {
-      this._cardZoom(this._image, this._title);
+      this.handleCardClick({image: this._image, title: this._title});
     })
   };
 

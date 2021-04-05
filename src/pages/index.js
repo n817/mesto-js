@@ -1,3 +1,4 @@
+import './index.css'; // импорт главного файла стилей для webpack
 import initialCards from '../utils/initialCards.js';
 import Card from '../components/Card.js';
 import Section from '../components/Section.js'

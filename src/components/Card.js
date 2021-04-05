@@ -20,16 +20,18 @@ export default class Card {
   // Функция заполнения карточки данными (картинка, значение alt и подпись)
   generateCard() {
     this._element = this._getTemplate(); // Запишем разметку в приватное поле _element, чтобы у других элементов появился доступ к ней
+    this._cardImage = this._element.querySelector('.card__image');
+    this._cardLikeButton = this._element.querySelector('.card__like-button');
     this._setEventListeners(); // Добавим обработчики событий
-    this._element.querySelector('.card__image').src = this._image;
-    this._element.querySelector('.card__image').alt = this._title;
+    this._cardImage.src = this._image;
+    this._cardImage.alt = this._title;
     this._element.querySelector('.card__title').textContent = this._title;
     return this._element;
   }
 
   // Функция обработки событий
   _setEventListeners() {
-    this._element.querySelector('.card__like-button').addEventListener('click', () => {
+    this._cardLikeButton.addEventListener('click', () => {
       this._cardLike();
     });
     this._element.querySelector('.card__trash-button').addEventListener('click', () => {
@@ -42,7 +44,7 @@ export default class Card {
 
   // Функция лайка карточки
   _cardLike() {
-    this._element.querySelector('.card__like-button').classList.toggle('card__like-button_active');
+    this._cardLikeButton.classList.toggle('card__like-button_active');
   }
 
   // Функция удаления карточки

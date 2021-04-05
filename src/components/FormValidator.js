@@ -58,11 +58,20 @@ export default class FormValidator {
     const inputElementArray = Array.from(this._form.querySelectorAll(this._inputSelector)); // Находим поля и создаем массив
     const submitButtonElement = this._form.querySelector(this._submitButtonSelector); // Находим кнопку submit
     this._toggleButtonState(inputElementArray, submitButtonElement); // Изначально кнопка заблокирована
+
     inputElementArray.forEach((inputElement) => {
       inputElement.addEventListener('input', () => {
         this._isValid(inputElement);
         this._toggleButtonState(inputElementArray, submitButtonElement);
       });
     });
+
+    this._form.addEventListener('reset', () => { // Деактивируем кнопку сабмита и очищаем ошибки при событии 'reset'
+      inputElementArray.forEach((inputElement) => {
+          this._hideInputError(inputElement);
+          submitButtonElement.classList.add(this._inactiveButtonClass);
+      })
+  });
+
   }
 }

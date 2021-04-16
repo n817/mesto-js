@@ -14,7 +14,7 @@
   <main id="content">
     <section class="profile page__section" aria-label="Профиль">
       <div class="profile__content">
-        <img src="" alt="Аватар профиля" class="profile__avatar">
+        <img src="#" alt="Аватар профиля" class="profile__avatar">
         <button type="button"  class="profile__avatar-edit-button">
           <img src="<%=require('./images/edit-button_big.svg')%>" alt="" class="profile__avatar-edit-icon">
         </button>
@@ -71,7 +71,7 @@
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="form__title">Обновить аватар</h2>
       <label class="form__field">
-        <input type="url" id="url-input" class="form__input form__input-url" name="url" placeholder="Ссылка на картинку с аватаром" required>
+        <input type="url" id="url-input" class="form__input form__input-url" name="link" placeholder="Ссылка на картинку с аватаром" required>
         <span class="form__input-error url-input-error"></span>
       </label>
       <button type="submit" class="form__submit-button">Сохранить</button>
@@ -107,7 +107,7 @@
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="form__title">Вы уверены?</h2>
       <button type="submit" class="form__submit-button">Да</button>
-    </div>
+    </form>
   </section>
 
 </body>

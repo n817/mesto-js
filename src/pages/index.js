@@ -97,7 +97,7 @@ const avatarForm = new PopupWithForm({
   popupSelector: '.popup_type_avatar-edit',
   handleFormSubmit: (formData) => {
     avatarForm.dataLoading(true);
-    userInfo.setUserAvatar(formData.url);
+    userInfo.setUserAvatar(formData.link);
     api.patchUserAvatar(formData)
       .catch((err) => {
         console.log(err);

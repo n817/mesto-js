@@ -14,12 +14,15 @@
   <main id="content">
     <section class="profile page__section" aria-label="Профиль">
       <div class="profile__content">
-        <img src="<%=require('./images/avatar.png')%>" alt="Аватар профиля" class="profile__avatar">
+        <img src="" alt="Аватар профиля" class="profile__avatar">
+        <button type="button"  class="profile__avatar-edit-button">
+          <img src="<%=require('./images/edit-button_big.svg')%>" alt="" class="profile__avatar-edit-icon">
+        </button>
         <div class="profile__title">
-          <h1 class="profile__name">Жак-Ив Кусто</h1>
+          <h1 class="profile__name"></h1>
           <button type="button" class="profile__edit-button" aria-label="Редактировать"></button>
       </div>
-        <p class="profile__description">Исследователь океана</p>
+        <p class="profile__description"></p>
       </div>
       <button type="button" class="profile__add-button" aria-label="Добавить"></button>
     </section>
@@ -32,7 +35,10 @@
           </button>
           <figcaption class="card__caption">
             <p class="card__title"></p>
-            <button type="button" class="card__like-button" aria-label="Нравится"></button>
+            <div class="card__like-block">
+              <button type="button" class="card__like-button" aria-label="Нравится"></button>
+              <p class="card__likes-counter">0</p>
+          </div>
           </figcaption>
           <button type="button" class="card__trash-button" aria-label="Удалить"></button>
         </figure>
@@ -60,12 +66,24 @@
     </form>
   </section>
 
+  <section class="popup popup_type_avatar-edit" aria-label="Редактирование аватара профиля">
+    <form class="form" name="avatar" novalidate>
+      <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
+      <h2 class="form__title">Обновить аватар</h2>
+      <label class="form__field">
+        <input type="url" id="url-input" class="form__input form__input-url" name="url" placeholder="Ссылка на картинку с аватаром" required>
+        <span class="form__input-error url-input-error"></span>
+      </label>
+      <button type="submit" class="form__submit-button">Сохранить</button>
+    </form>
+  </section>
+
   <section class="popup popup_type_card-add" aria-label="Добавление нового места">
     <form class="form" name="add" novalidate>
       <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
       <h2 class="form__title">Новое место</h2>
       <label class="form__field">
-        <input type="text" id="title-input" class="form__input" name="title" placeholder="Название" minlength="1" maxlength="30" required>
+        <input type="text" id="title-input" class="form__input" name="cardname" placeholder="Название" minlength="1" maxlength="30" required>
         <span class="form__input-error title-input-error"></span>
       </label>
       <label class="form__field">
@@ -83,6 +101,14 @@
       <figcaption class="zoom__caption">Каньон Святой Анны</figcaption>
     </figure>
   </section>
-<!-- <script src="./pages/index.js" type="module"></script> -->
+
+  <section class="popup popup_type_confirm-delete">
+    <form class="form" name="confirm" novalidate>
+      <button type="button" class="popup__close-button" aria-label="Закрыть попап"></button>
+      <h2 class="form__title">Вы уверены?</h2>
+      <button type="submit" class="form__submit-button">Да</button>
+    </div>
+  </section>
+
 </body>
 </html>

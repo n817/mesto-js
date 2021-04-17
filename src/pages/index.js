@@ -148,23 +148,27 @@ api.getInitialCards()
 const cardForm = new PopupWithForm({
   popupSelector: '.popup_type_card-add',
   handleFormSubmit: (formData) => { // Получаем данные из формы
-    const newCardData = {
+    /*const newCardData = {
       link: formData.url,
       name: formData.cardname,
       likes: [],
       owner:{_id: 'e92fdb2b0f69a8327ca4332b'}
-    };
+    };*/
     cardForm.dataLoading(true);
-    const newCard = createCard(newCardData); // Создаем новую карточку
-    cardsSection.addItem(newCard); // Добавляем ее в DOM
+
     api.postNewCard(formData)
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        cardForm.dataLoading(false, 'Создать');
-        cardForm.close();
-      })
+    .then((res) => {
+      const newCard = createCard(res); // Создаем новую карточку
+      cardsSection.addItem(newCard); // Добавляем ее в DOM
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      cardForm.dataLoading(false, 'Создать');
+      cardForm.close();
+    })
+
   }
 });
 

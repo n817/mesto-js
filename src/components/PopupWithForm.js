@@ -1,5 +1,5 @@
-import Popup from './Popup.js';
 // Класс, отвечающий за работу форм (открытие, закрытие, сохранение информации)
+import Popup from './Popup.js';
 export default class PopupWithForm extends Popup {
   constructor({popupSelector, handleFormSubmit}){
     super(popupSelector);
@@ -39,13 +39,8 @@ export default class PopupWithForm extends Popup {
     this._formElement.addEventListener('submit', this._handleSubmit);
   }
 
-  dataLoading (isLoading, originalTextContent) {
-    if (isLoading) {
-      this._submitButton.textContent = 'Сохранение...';
-    }
-    else {
-      this._submitButton.textContent = originalTextContent;
-    }
+  buttonText (text) {
+      this._submitButton.textContent = text;
   }
 
   close(){

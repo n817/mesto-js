@@ -1,5 +1,3 @@
-import {confirmForm, api} from '../pages/index.js';
-
 // Класс создания карточки
 export default class Card {
   constructor(data, cardSelector, handleCardClick){
@@ -23,7 +21,10 @@ export default class Card {
   }
 
   // Функция заполнения карточки данными (картинка, значение alt и подпись)
-  generateCard() {
+  generateCard(api, confirmForm, userId) {
+    this._api = api;
+    this._confirmForm = confirmForm;
+    this._userId = userId;
     this._element = this._getTemplate(); // Запишем разметку в приватное поле _element, чтобы у других элементов появился доступ к ней
     this._cardlink = this._element.querySelector('.card__image');
     this._cardName = this._element.querySelector('.card__title');
@@ -35,11 +36,11 @@ export default class Card {
     this._cardlink.alt = this._name;
     this._cardName.textContent = this._name;
     this._cardLikesCounter.textContent = this._likes.length;
-    if (this._cardOwnerId === 'e92fdb2b0f69a8327ca4332b'){ // добавляем нашим карточкам иконку корзины
+    if (this._cardOwnerId === this._userId){ // добавляем нашим карточкам иконку корзины
       this._cardDeleteButton.classList.add('card__trash-button_active');
     }
     this._likes.forEach((element) => { // отображаем лайк карточек, которым мы ставили лайк
-      if (element._id === 'e92fdb2b0f69a8327ca4332b') {
+      if (element._id === this._userId) {
         this._togglelikeIcon ();
       }
     });
@@ -51,7 +52,7 @@ export default class Card {
     this._cardLikeButton.addEventListener('click', () => { // Лайк карточки
       if (!this._cardLikeButton.classList.contains('card__like-button_active')) {
         this._togglelikeIcon();
-        api.toggleCardLike({
+        this._api.toggleCardLike({
           methodName: 'PUT',
           cardId: this._cardId,
         })
@@ -64,7 +65,7 @@ export default class Card {
       }
       else {
         this._togglelikeIcon();
-        api.toggleCardLike({
+        this._api.toggleCardLike({
           methodName: 'DELETE',
           cardId: this._cardId,
         })
@@ -77,7 +78,7 @@ export default class Card {
       }
     });
     this._cardDeleteButton.addEventListener('click', () => {
-      confirmForm.open(this._element, this._cardId); // Подтверждение удаления карточки
+      this._confirmForm.open(this._element, this._cardId); // Подтверждение удаления карточки
     })
     this._element.querySelector('.card__image-button').addEventListener('click', () => {
       this.handleCardClick({link: this._link, name: this._name});

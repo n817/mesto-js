@@ -25,6 +25,8 @@ import {
   validatorData}
 from '../utils/constants.js';
 
+let userId; // Переменная, в которой будет храниться ID пользователя
+
 
 // Создаем экземпляр класса взаимодействия с API сервера
 const api = new Api({
@@ -46,10 +48,10 @@ Promise.all([
   .then((res) => {
     const [userData, initialCards] = res;
     // Загружаем на страницу данные пользователя
+    userId = userData._id;
     userInfo.setUserInfo({
       username: userData.name,
-      description: userData.about,
-      userId: userData._id
+      description: userData.about
     });
     userInfo.setUserAvatar(userData.avatar);
     // Загружаем на страницу карточки
@@ -85,9 +87,9 @@ const userForm = new PopupWithForm({
   popupSelector: '.popup_type_profile-edit',
   handleFormSubmit: (formData) => {
     userForm.buttonText('Сохранение...');
-    userInfo.setUserInfo(formData);
     api.patchUserInfo(formData)
       .then(() => {
+        userInfo.setUserInfo(formData);
         userForm.close();
       })
       .catch((err) => {
@@ -149,7 +151,6 @@ const confirmForm = new PopupWithConfirmation({
 // Функция создания новой карточки
 function createCard(data){
   const newCard = new Card(data, '.card-template', handleCardClick);
-  const userId = document.querySelector('.profile__name').id;
   const newCardElement = newCard.generateCard(api, confirmForm, userId);
   return newCardElement;
 }

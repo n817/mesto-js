@@ -6,17 +6,14 @@ export default class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
     this._formElement = this._popupElement.querySelector('.form');
     this._submitButton = this._popupElement.querySelector('.form__submit-button');
+    this._inputList = this._formElement.querySelectorAll('.form__input');  // Создаем массив из всех полей формы
     this._handleSubmit = this._handleSubmit.bind(this);
 
   }
 
   // Метод сбора данных всех полей формы
   _getInputValues(){
-    // Создаем массив из всех полей формы
-    this._inputList = this._formElement.querySelectorAll('.form__input');
-
-    // создаем пустой объект
-    this._formValues = {};
+    this._formValues = {}; // создаем пустой объект
 
     // добавляем в этот объект значения всех полей формы
     this._inputList.forEach(input => {

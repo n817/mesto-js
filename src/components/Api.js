@@ -11,12 +11,7 @@ export default class Api {
     return fetch(this._userUrl, {
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
   // Загрузка новой информации о пользователе на сервер
@@ -29,12 +24,7 @@ export default class Api {
       about: formData.description
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    });
+    .then(this._checkResponse)
   }
 
   // Загрузка аватара пользователя на сервер
@@ -46,12 +36,7 @@ export default class Api {
       avatar: formData.url,
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
   // Получение массива карточек с сервера
@@ -59,12 +44,7 @@ export default class Api {
     return fetch(this._cardsUrl, {
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
   // Загрузка новой карточки на сервер
@@ -77,12 +57,7 @@ export default class Api {
         link: formData.url
         })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
   // Лайк и удаление лайка карточки
@@ -91,12 +66,7 @@ export default class Api {
       method: methodName,
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
   }
 
   // Удаление карточки на сервере
@@ -105,13 +75,14 @@ export default class Api {
       method: 'DELETE',
       headers: this._headers
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json();
-      }
-      return Promise.reject(`Ошибка: ${res.status}`);
-    })
+    .then(this._checkResponse)
+  }
+
+  _checkResponse(res) {
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(`Ошибка: ${res.status}`);
   }
 
 }
-
